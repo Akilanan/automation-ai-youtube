@@ -1,0 +1,31 @@
+name: Daily AI Video Agency
+on:
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+jobs:
+  generate-video:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+    - run: pip install -r requirements.txt
+    - run: |
+        echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+        echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+        echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
+        echo "PEXELS_API_KEY=${{ secrets.PEXELS_API_KEY }}" >> .env
+    - run: python main.py --topic "Auto"
+    - run: |
+        git config user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git add training_data/video_history.json
+        git commit -m "Update history [skip ci]" || true
+        git push || true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
