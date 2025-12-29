@@ -4,3 +4,4 @@ edge-tts
 python-dotenv
 moviepy
 imageio-ffmpeg
+elevenlabs

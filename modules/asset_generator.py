@@ -48,10 +48,10 @@ class AssetGenerator:
             print(f"ElevenLabs Error: {e}. Falling back to Free TTS.")
             return self.generate_audio_free(text)
 
-    def generate_audio_free(self, text: str) -> str:
+    def generate_audio_free(self, text: str, voice: str = "en-US-GuyNeural") -> str:
         """Generates audio using Microsoft Edge TTS (Free)."""
         output_path = f"output_audio_free_{random.randint(1000,9999)}.mp3"
-        voice = "en-US-ChristopherNeural" # Professional Male Voice
+        # Alternatives: en-US-GuyNeural, en-US-AriaNeural, en-GB-RyanNeural
         
         async def _save():
             communicate = edge_tts.Communicate(text, voice)
@@ -59,7 +59,7 @@ class AssetGenerator:
             
         try:
             asyncio.run(_save())
-            print(f"Generated FREE audio: {output_path}")
+            print(f"Generated FREE audio: {output_path} ({voice})")
             return output_path
         except Exception as e:
             print(f"EdgeTTS Error: {e}")
