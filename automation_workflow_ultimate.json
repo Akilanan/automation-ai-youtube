@@ -1,0 +1,266 @@
+{
+    "name": "Ultimate Self-Improving AI Agent",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hours": 9
+                        }
+                    ]
+                }
+            },
+            "name": "Daily Schedule",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                0,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "command": "type \"C:\\Users\\12aki\\Downloads\\automation ai\\automation_ai\\training_data\\video_history.json\""
+            },
+            "name": "Read Past Performance",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4",
+                "messages": {
+                    "values": [
+                        {
+                            "content": "Analyze this video history JSON. Identify the hook pattern that got the most views. Return a 'Learning Rule' for the next video. Input Data: {{ $json.stdout }}"
+                        }
+                    ]
+                }
+            },
+            "name": "AI Analyst (Self-Improvement)",
+            "type": "n8n-nodes-base.openAi",
+            "typeVersion": 1,
+            "position": [
+                400,
+                300
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "YOUR_OPENAI_CRED_ID",
+                    "name": "OpenAI account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "model": "gpt-4",
+                "messages": {
+                    "values": [
+                        {
+                            "content": "Generate a new Viral Trading Video Idea. Apply this Learning Rule: {{ $json.message.content }}. Return strictly valid JSON with title, hook, script, and visual_keywords."
+                        }
+                    ]
+                },
+                "jsonOutput": true
+            },
+            "name": "AI Creator (Optimized)",
+            "type": "n8n-nodes-base.openAi",
+            "typeVersion": 1,
+            "position": [
+                600,
+                300
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "YOUR_OPENAI_CRED_ID",
+                    "name": "OpenAI account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb",
+                "options": {},
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "text",
+                            "value": "={{ $json.message.content.script }}"
+                        }
+                    ]
+                }
+            },
+            "name": "Generate Audio (ElevenLabs)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                800,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.pexels.com/videos/search",
+                "options": {},
+                "queryParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "query",
+                            "value": "={{ $json.message.content.visual_keywords }}"
+                        }
+                    ]
+                }
+            },
+            "name": "Get Visuals (Pexels)",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                800,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "command": "python \"C:\\Users\\12aki\\Downloads\\automation ai\\automation_ai\\modules\\video_editor.py\" --render_native"
+            },
+            "name": "Render Final Video",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                1000,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "authentication": "oAuth2",
+                "resource": "video",
+                "title": "={{ $node[\"AI Creator (Optimized)\"].json.message.content.title }}",
+                "description": "Viral Trading Video"
+            },
+            "name": "Upload to YouTube",
+            "type": "n8n-nodes-base.youtube",
+            "typeVersion": 1,
+            "position": [
+                1200,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "mode": "append",
+                "file": "C:\\Users\\12aki\\Downloads\\automation ai\\automation_ai\\training_data\\video_history.json",
+                "contents": "={{ JSON.stringify({date: new Date(), title: $node[\"AI Creator (Optimized)\"].json.title, views: 0}) }}"
+            },
+            "name": "Update History (Close Loop)",
+            "type": "n8n-nodes-base.writeToFile",
+            "typeVersion": 1,
+            "position": [
+                1400,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Daily Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Read Past Performance",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Read Past Performance": {
+            "main": [
+                [
+                    {
+                        "node": "AI Analyst (Self-Improvement)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Analyst (Self-Improvement)": {
+            "main": [
+                [
+                    {
+                        "node": "AI Creator (Optimized)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI Creator (Optimized)": {
+            "main": [
+                [
+                    {
+                        "node": "Generate Audio (ElevenLabs)",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Get Visuals (Pexels)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Generate Audio (ElevenLabs)": {
+            "main": [
+                [
+                    {
+                        "node": "Render Final Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Get Visuals (Pexels)": {
+            "main": [
+                [
+                    {
+                        "node": "Render Final Video",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Render Final Video": {
+            "main": [
+                [
+                    {
+                        "node": "Upload to YouTube",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Upload to YouTube": {
+            "main": [
+                [
+                    {
+                        "node": "Update History (Close Loop)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

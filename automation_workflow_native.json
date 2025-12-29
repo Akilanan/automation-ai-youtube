@@ -1,0 +1,232 @@
+{
+    "name": "Native AI Agent Workflow",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hours": 9
+                        }
+                    ]
+                }
+            },
+            "name": "Schedule",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                100,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "model": "gpt-4",
+                "messages": {
+                    "values": [
+                        {
+                            "content": "Generate a viral trading video idea. Return strictly valid JSON: {\"title\": \"string\", \"hook\": \"string\", \"script\": \"string\", \"visual_keyword\": \"string\"}"
+                        }
+                    ]
+                },
+                "jsonOutput": true
+            },
+            "name": "AI - Idea Generator",
+            "type": "n8n-nodes-base.openAi",
+            "typeVersion": 1,
+            "position": [
+                300,
+                300
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "YOUR_OPENAI_CRED_ID",
+                    "name": "OpenAI account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "requestMethod": "POST",
+                "url": "https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb",
+                "options": {},
+                "bodyParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "text",
+                            "value": "={{ $json.message.content.script }}"
+                        }
+                    ]
+                },
+                "headerParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "xi-api-key",
+                            "value": "YOUR_ELEVENLABS_KEY"
+                        }
+                    ]
+                }
+            },
+            "name": "HTTP - Generate Audio",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                550,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "url": "https://api.pexels.com/videos/search",
+                "options": {},
+                "queryParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "query",
+                            "value": "={{ $json.message.content.visual_keyword }}"
+                        },
+                        {
+                            "name": "per_page",
+                            "value": "1"
+                        }
+                    ]
+                },
+                "headerParametersUi": {
+                    "parameter": [
+                        {
+                            "name": "Authorization",
+                            "value": "YOUR_PEXELS_KEY"
+                        }
+                    ]
+                }
+            },
+            "name": "HTTP - Get Video Asset",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.1,
+            "position": [
+                550,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "command": "python \"C:\\Users\\12aki\\Downloads\\automation ai\\automation_ai\\module\\video_editor.py\" --audio \"{{ $item(0).$node[\"HTTP - Generate Audio\"].json.data }}\" --video \"{{ $json.videos[0].video_files[0].link }}\""
+            },
+            "name": "Render Video (Python)",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                800,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "authentication": "oAuth2",
+                "resource": "video",
+                "title": "={{ $node[\"AI - Idea Generator\"].json.message.content.title }}",
+                "description": "Auto-Generated via n8n"
+            },
+            "name": "Youtube Upload",
+            "type": "n8n-nodes-base.youtube",
+            "typeVersion": 1,
+            "position": [
+                1000,
+                150
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Facebook Upload",
+            "type": "n8n-nodes-base.facebook",
+            "typeVersion": 1,
+            "position": [
+                1000,
+                300
+            ]
+        },
+        {
+            "parameters": {},
+            "name": "Instagram Upload",
+            "type": "n8n-nodes-base.instagram",
+            "typeVersion": 1,
+            "position": [
+                1000,
+                450
+            ]
+        }
+    ],
+    "connections": {
+        "Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "AI - Idea Generator",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "AI - Idea Generator": {
+            "main": [
+                [
+                    {
+                        "node": "HTTP - Generate Audio",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "HTTP - Get Video Asset",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "HTTP - Generate Audio": {
+            "main": [
+                [
+                    {
+                        "node": "Render Video (Python)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "HTTP - Get Video Asset": {
+            "main": [
+                [
+                    {
+                        "node": "Render Video (Python)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Render Video (Python)": {
+            "main": [
+                [
+                    {
+                        "node": "Youtube Upload",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Facebook Upload",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "Instagram Upload",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

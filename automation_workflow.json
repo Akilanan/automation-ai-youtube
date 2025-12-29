@@ -1,0 +1,75 @@
+{
+    "name": "Advanced AI Video Automation (Local)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "hours",
+                            "hours": 9
+                        }
+                    ]
+                }
+            },
+            "name": "Daily Schedule",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "command": "python \"C:\\Users\\12aki\\Downloads\\automation ai\\automation_ai\\main.py\" --topic \"Auto\""
+            },
+            "name": "Run Automation Script",
+            "type": "n8n-nodes-base.executeCommand",
+            "typeVersion": 1,
+            "position": [
+                500,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "fromEmail": "automation@yourdomain.com",
+                "toEmail": "12akilan2007@gmail.com",
+                "subject": "Daily Video Generated",
+                "text": "The daily AI video automation has run successfully. Check your output folder."
+            },
+            "name": "Send Email Notification",
+            "type": "n8n-nodes-base.emailSend",
+            "typeVersion": 1,
+            "position": [
+                750,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Daily Schedule": {
+            "main": [
+                [
+                    {
+                        "node": "Run Automation Script",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Run Automation Script": {
+            "main": [
+                [
+                    {
+                        "node": "Send Email Notification",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

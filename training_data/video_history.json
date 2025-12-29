@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Stop Day Trading!",
+    "hook": "Stop day trading. Do this instead.",
+    "flash_prompt": "SMA 200 STRATEGY",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
+  },
+  {
+    "title": "Why 99% of Traders Lose",
+    "hook": "Stop trading until you understand this single secret.",
+    "flash_prompt": "Rule: Max 1% Risk",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
+  },
+  {
+    "title": "The Hidden Mathematics of Trading",
+    "hook": "You are losing money because you don't understand this one math equation.",
+    "flash_prompt": "Secret: Trade Liquidity, Not Patterns",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
+  },
+  {
+    "title": "The Simulator Trap: Fixing Your Test Delivery Failure",
+    "hook": "If your backtest shows 90% winners but your live account is hemorrhaging cash, you are failing the Test Delivery phase. You think you're ready, but the market knows you're not.",
+    "flash_prompt": "REQUIRED: Simulate Slippage & Commissions!",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
+  },
+  {
+    "title": "The $100 Billion Secret: GenAI's Causal Inference Trading Bots",
+    "hook": "Stop trading like it\u2019s 2010. If your 'AI' bot is just optimizing RSI settings, you\u2019re already obsolete. That's not Alpha generation, that\u2019s just backtesting bias.",
+    "flash_prompt": "ALPHA IS NOW ENGINEERED CERTAINTY.",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
+  }
+]
