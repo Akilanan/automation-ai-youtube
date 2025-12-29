@@ -48,7 +48,7 @@ class AssetGenerator:
             print(f"ElevenLabs Error: {e}. Falling back to Free TTS.")
             return self.generate_audio_free(text)
 
-    def generate_audio_free(self, text: str, voice: str = "en-US-GuyNeural") -> str:
+    def generate_audio_free(self, text: str, voice: str = "en-US-JennyNeural") -> str:
         """Generates audio using Microsoft Edge TTS (Free)."""
         output_path = f"output_audio_free_{random.randint(1000,9999)}.mp3"
         # Alternatives: en-US-GuyNeural, en-US-AriaNeural, en-GB-RyanNeural
