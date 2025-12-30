@@ -94,5 +94,21 @@
       "shares": 0,
       "saves": 0
     }
+  },
+  {
+    "title": "The Soft Landing is a LIE: Why Structural Inflation Guarantees a Hard Landing",
+    "hook": "Stop believing the soft landing narrative. It's the biggest lie masking deeper structural cracks in the global economy.",
+    "flash_prompt": "Structural Inflation > Rate Hikes = Hard Landing",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
   }
 ]
