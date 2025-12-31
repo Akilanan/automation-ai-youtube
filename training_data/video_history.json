@@ -110,5 +110,21 @@
       "shares": 0,
       "saves": 0
     }
+  },
+  {
+    "title": "The Higher For Longer Death Trap: Why Sticky Inflation Just Killed Your Rate Cut Portfolio",
+    "hook": "You bought the Pivot narrative. The lie was simple: inflation was dead, and cuts were guaranteed by Q3. That belief is costing you everything.",
+    "flash_prompt": "Sticky Inflation Components: Labor, OER, Services.",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
   }
 ]
