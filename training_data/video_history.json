@@ -126,5 +126,21 @@
       "shares": 0,
       "saves": 0
     }
+  },
+  {
+    "title": "Your S&P 500 Fund is a LIE (The NVDA Concentration Bomb)",
+    "hook": "You think your S&P 500 index fund is diversified? That\u2019s the most dangerous lie in modern investing. It\u2019s a passive concentration trap.",
+    "flash_prompt": "7% NVDA weight means 1 in 14 index dollars tracks one stock.",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
   }
 ]
