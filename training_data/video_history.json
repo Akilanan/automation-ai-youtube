@@ -334,5 +334,21 @@
       "shares": 0,
       "saves": 0
     }
+  },
+  {
+    "title": "The Hidden Mathematics of Trading",
+    "hook": "You are losing money because you don't understand this one math equation.",
+    "flash_prompt": "Secret: Trade Liquidity, Not Patterns",
+    "platform_ids": {
+      "YouTubeUploader": "mock_yt_video_id",
+      "TikTokUploader": "mock_tiktok_video_id",
+      "InstagramUploader": "mock_insta_video_id",
+      "FacebookUploader": "mock_fb_video_id"
+    },
+    "metrics": {
+      "views": 0,
+      "shares": 0,
+      "saves": 0
+    }
   }
 ]
